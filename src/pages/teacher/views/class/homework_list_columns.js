@@ -5,17 +5,17 @@ const columns = [{
 }, {
     title: '作业名称',
     dataIndex: 'name',
-    search: {
+    edit: {
         type: 'input'
-    }
+    },
+    search: true
 }, {
     title: '截止时间',
-    dataIndex: 'deadline',
+    dataIndex: 'ddl',
     datetime: true,
-    sorter: true
-}, {
-    title: '成绩',
-    dataIndex: 'score',
+    edit: {
+        type: 'date_picker'
+    },
     sorter: true
 }, {
     title: '操作',

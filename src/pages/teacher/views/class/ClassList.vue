@@ -1,13 +1,14 @@
 <template>
     <a-card title="班级列表" class="class-list">
         <a-row :gutter="[16,16]">
-            <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="6" :xxl="4" :key="c.id" v-for="c in classes">
+            <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="6" :xxl="4">
                 <a @click="$router.push('class/'+1)">
-                    <a-card :title="c.name">
+                    <a-card title="数据库周四下午5-8节">
                         <div class="class_content">
                             <a-avatar icon="user" size="large"/>
                             <div class="info">
-                                <p>{{ c.user?.name }}</p>
+                                <p>李菊老师</p>
+                                <p>协作老师：李菊、龙梓老师</p>
                             </div>
                         </div>
                     </a-card>
@@ -16,12 +17,12 @@
             </a-col>
 
             <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="6" :xxl="4">
-                <a @click="joinClass">
+                <a @click="visible=true">
                     <a-card class="join">
                         <div class="class_content">
                             <a-avatar icon="plus" size="large"/>
                             <div class="info">
-                                <p>加入班级</p>
+                                <p>创建班级</p>
                             </div>
                         </div>
                     </a-card>
@@ -30,28 +31,14 @@
         </a-row>
         <a-modal
             :mask="false"
-            title="加入班级"
+            title="创建班级"
             :visible="visible"
             @cancel="visible=false"
-            :footer="null"
-            destroyOnClose
+            ok-text="创建"
         >
-            <a-form-item label="请输入班级ID">
-                <a-input-search enter-button @search="onSearch"/>
+            <a-form-item label="请输入班级名称">
+                <a-input />
             </a-form-item>
-            <div class="search-class" v-if="search.code === 200">
-                <div class="info">
-                    <p>ID: {{ search?.data.id }}</p>
-                    <p>班级名称: {{ search?.data?.name }}</p>
-                    <p>创建人: {{ search?.data?.user?.name }}老师</p>
-                </div>
-                <div class="join">
-                    <a-button v-if="search?.join" disabled>已加入</a-button>
-                    <a-button type="primary" v-else>加入</a-button>
-                </div>
-                <div class="clear"></div>
-            </div>
-            <a-empty v-else/>
         </a-modal>
     </a-card>
 </template>
@@ -61,29 +48,10 @@ export default {
     name: 'ClassList',
     data() {
         return {
-            visible: false,
-            classes: [],
-            search: {}
+            visible: false
         }
     },
-    created() {
-        this.$api.student_api._class.get_list().then(r => {
-            this.classes = r.data
-        })
-    },
     methods: {
-        joinClass() {
-            this.visible = true
-            this.search = {}
-        },
-        onSearch(id) {
-            this.search = {}
-            this.$nextTick(() => {
-                this.$api.student_api._class.get(id).then(r => {
-                    this.search = r
-                })
-            })
-        },
         ok() {
 
         }
@@ -94,7 +62,7 @@ export default {
 <style lang="less" scoped>
 .class-list {
     .ant-card {
-        height: 191px;
+        height: 223px;
     }
 
     .class_content {
@@ -111,7 +79,7 @@ export default {
     }
 
     .join {
-        padding-top: 30px;
+        padding-top: 45px;
     }
 }
 

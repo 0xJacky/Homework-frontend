@@ -1,11 +1,11 @@
 <template>
     <a-card title="数据库周四下午5-8节">
+        <a slot="extra" @click="create_homework">创建作业</a>
         <std-table
             :columns="columns"
             :api="api"
             :deletable="false"
-            edit_text="提交"
-            :get_params="params"
+            edit_text="查看"
             @clickEdit="id => $router.push('/homework/'+id)"
         />
 
@@ -28,13 +28,13 @@ export default {
     data() {
         return {
             columns,
-            api: this.$api.student_api.homework,
-            params: {
-                id: this.$route.params.id
-            }
+            api: this.$api.teacher_api.homework
         }
     },
     methods: {
+        create_homework() {
+            this.$router.push('/homework/create')
+        }
     }
 }
 </script>

@@ -1,16 +1,22 @@
-const columns = [{
+const assign_columns = [{
     title: 'ID',
     dataIndex: 'id',
     sorter: true
 }, {
-    title: '作业名称',
+    title: '学号',
+    dataIndex: 'school_id',
+    search: {
+        type: 'input'
+    }
+}, {
+    title: '姓名',
     dataIndex: 'name',
     search: {
         type: 'input'
     }
 }, {
-    title: '截止时间',
-    dataIndex: 'deadline',
+    title: '提交时间',
+    dataIndex: 'created_at',
     datetime: true,
     sorter: true
 }, {
@@ -22,4 +28,4 @@ const columns = [{
     dataIndex: 'action'
 }]
 
-export default columns
+export default assign_columns
