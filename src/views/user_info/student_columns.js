@@ -10,16 +10,6 @@ const student_columns = [
         }
     },
     {
-        title: '真实照片',
-        dataIndex: 'real_photo',
-        edit: {
-            type: 'upload',
-            upload_type: 'img',
-            api: Vue.prototype.$api.user.upload_real_photo,
-            auto_upload: true,
-        }
-    },
-    {
         title: '头像',
         dataIndex: 'avatar',
         edit: {
@@ -45,34 +35,6 @@ const student_columns = [
     {
         title: '学号',
         dataIndex: 'school_id',
-        edit: {
-            type: 'readonly'
-        }
-    },
-    {
-        title: '学院',
-        dataIndex: 'college.name',
-        edit: {
-            type: 'readonly'
-        }
-    },
-    {
-        title: '专业',
-        dataIndex: 'major.name',
-        edit: {
-            type: 'readonly'
-        }
-    },
-    {
-        title: '班级',
-        dataIndex: 'class.name',
-        edit: {
-            type: 'readonly'
-        }
-    },
-    {
-        title: '年级',
-        dataIndex: 'grade',
         edit: {
             type: 'readonly'
         }

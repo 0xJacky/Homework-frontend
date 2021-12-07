@@ -7,6 +7,7 @@
             :validate-status="error[d.dataIndex] ? 'error' :'success'"
             :wrapperCol="d.edit.wrapperCol"
         >
+            <p v-if="d.description" v-html="d.description+'<br/>'"/>
             <a-input
                 v-if="d.edit.type==='input'"
                 v-model="dataSource[d.dataIndex]"
@@ -83,6 +84,20 @@
                 {{ d.text }}
             </a-checkbox>
 
+            <std-check-group
+                v-else-if="d.edit.type==='check-group'"
+                v-model="temp[d.dataIndex]"
+                :options="d.options"
+                :allow-other="d.edit.allow_other"
+            />
+
+            <std-radio-group
+                v-else-if="d.edit.type==='radio-group'"
+                v-model="temp[d.dataIndex]"
+                :options="d.options"
+                :key-type="d.edit.key_type"
+            />
+
             <std-transfer
                 v-else-if="d.edit.type==='transfer'"
                 v-model="temp[d.dataIndex]"
@@ -98,7 +113,7 @@
 
             <p v-else>{{ 'edit.type 参数非法 ' + d.edit.type }}</p>
 
-            <p v-if="!dataSource[d.dataIndex] && d.empty_description">{{ d.empty_description }}</p>
+            <p v-if="!dataSource[d.dataIndex] && d.empty_description" v-html="d.empty_description"/>
         </a-form-item>
         <a-form-item>
             <slot name="supplement"/>
@@ -116,10 +131,14 @@ import StdTransfer from './StdTransfer'
 import RichTextEditor from '@/components/RichText/RichTextEditor'
 import StdCheckTag from '@/components/StdDataEntry/StdCheckTag'
 import StdMultiCheckTag from '@/components/StdDataEntry/StdMultiCheckTag'
+import StdCheckGroup from '@/components/StdDataEntry/StdCheckGroup'
+import StdRadioGroup from '@/components/StdDataEntry/StdRadioGroup'
 
 export default {
     name: 'StdDataEntry',
     components: {
+        StdRadioGroup,
+        StdCheckGroup,
         StdMultiCheckTag,
         StdCheckTag,
         RichTextEditor,
@@ -180,7 +199,7 @@ export default {
             const arr = desc.split('.')
             while (arr.length) {
                 const top = obj[arr.shift()]
-                if (!top) {
+                if (top === undefined) {
                     return null
                 }
                 obj = top

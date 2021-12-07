@@ -1,6 +1,6 @@
 <template>
     <div class="footer center">
-        Copyright © 2020 - {{ thisYear }} 深圳技术大学
+        Copyright © 2020 - {{ thisYear }} Homework!
     </div>
 </template>
 

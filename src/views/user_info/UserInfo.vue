@@ -25,7 +25,6 @@ import StdDataEntry from '@/components/StdDataEntry/StdDataEntry'
 import FooterToolBar from '@/components/FooterToolbar/FooterToolBar'
 import student_columns from './student_columns'
 import teacher_columns from './teacher_columns'
-import company_columns from './company_columns'
 import ResetPassword from '@/components/ResetPassword/ResetPassword'
 
 export default {
@@ -49,8 +48,6 @@ export default {
         const power = this.$store.state.user.info.power
         if (power === 1) {
             this.editable = student_columns
-        } else if (power === 3 || power === 4) {
-            this.editable = company_columns
         } else if (power === 2 || power === 5) {
             this.editable = teacher_columns
         }

@@ -133,7 +133,7 @@ export default {
                 school_id: null,
                 password: null
             },
-            form: null,
+            form: this.$form.createForm(this),
             ok: false,
             captchaObj: null,
             data: {},
@@ -171,15 +171,6 @@ export default {
                     break
                 case UserType.Teacher:
                     window.location = '/teacher/dashboard'
-                    break
-                case UserType.CompanyTeacher:
-                    window.location = '/company_teacher/dashboard'
-                    break
-                case UserType.Company:
-                    window.location = '/company/dashboard'
-                    break
-                case UserType.College:
-                    window.location = '/college/dashboard'
                     break
             }
         },

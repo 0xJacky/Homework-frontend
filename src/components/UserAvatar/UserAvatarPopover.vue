@@ -10,21 +10,9 @@
             <div slot="content">
                 <div class="user-pop-card">
                     <table>
-                        <tr v-if="user.power === 1 || user.power === 2 || user.power === 5">
+                        <tr>
                             <td>学工号</td>
                             <td style="text-align: right">{{ user.school_id }}</td>
-                        </tr>
-                        <tr v-if="user.power === 1 || user.power === 2 || user.power === 5">
-                            <td>学院</td>
-                            <td style="text-align: right">{{ user.college?.name }}</td>
-                        </tr>
-                        <!--<tr v-if="user.power !== 1 ">
-                            <td>职称</td>
-                            <td style="text-align: right">{{ user.job_title }}</td>
-                        </tr>-->
-                        <tr v-if="user.power === 1">
-                            <td>专业</td>
-                            <td style="text-align: right">{{ user.major?.name }}</td>
                         </tr>
                         <tr>
                             <td>用户类型</td>

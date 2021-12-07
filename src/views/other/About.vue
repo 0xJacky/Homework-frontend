@@ -1,26 +1,14 @@
 <template>
     <a-card>
-        <div style="text-align: center">
-            <img :src="logo" style="width: 256px"/>
-        </div>
-        <h2 style="text-align: center">Homework</h2>
-        <p style="text-align: center">Shenzhen Technology University Enterprise Internship System</p>
-        <p style="text-align: center">Version: {{ version }}（{{ build_id }}）</p>
-        <h3 style="text-align: center">项目组</h3>
-        <div style="text-align: center">
-            <p>指导教师：李文贤、杨旭</p>
-            <p>项目和文档管理：麦炜欣</p>
-            <p>后端数据库开发：余圳曦、林昕泽、林潮林</p>
-            <p>Web前端开发：余圳曦、邓崇森</p>
-            <p>小程序开发：方钦、麦炜欣</p>
-            <div v-if="api_root === 'mock'" class="egg">
-                <p>mock 特供彩蛋</p>
-                <a-button @click="changeUserPower(0)">我是学生</a-button>
-                <a-button @click="changeUserPower(1)">我是企业</a-button>
-                <a-button @click="changeUserPower(2)">我是教师</a-button>
-                <a-button @click="changeUserPower(3)">我是学院</a-button>
-            </div>
-            <p>Copyright © 2020 - {{ this_year }} 深圳技术大学 </p>
+        <h2>Homework!</h2>
+        <p>作业提交系统</p>
+        <p>Version: {{ version }}（{{ build_id }}）</p>
+        <h3>项目组</h3>
+        <div>
+            <p>余圳曦：系统架构设计，前端与后端开发</p>
+            <p>孙运滨：后端开发</p>
+            <p>陈致海：组长，测试开发</p>
+            <p>Copyright © 2020 - {{ this_year }} Homework! </p>
         </div>
     </a-card>
 </template>
@@ -39,18 +27,14 @@ export default {
         }
     },
     methods: {
-        async changeUserPower(power) {
-            await this.$store.dispatch('update_mock_user', {power: power})
-            await this.$api.user.info()
-            await this.$message.success('修改成功')
-        }
+
     }
 }
 </script>
 
 <style lang="less" scoped>
 h2 {
-    padding: 10px;
+    padding-bottom: 10px;
 }
 
 .egg {
