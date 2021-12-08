@@ -8,10 +8,10 @@ const _class = {
         return http.get('/student/class/'+id)
     },
     join(id) {
-        return http.get('/student/class/'+id +'/join')
+        return http.post('/student/class/'+id +'/join')
     },
     exit(id) {
-        return http.get('/student/class/'+id +'/exit')
+        return http.post('/student/class/'+id +'/exit')
     }
 }
 

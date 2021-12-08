@@ -5,7 +5,7 @@
         <p>学号：{{ data?.user?.school_id }}</p>
         <h3>批改</h3>
         <a-form-item label="分数">
-            <a-input-number v-model="data.score" :min="0" :max="100" :step="1"/>
+            <a-input-number v-model="data.score" :min="1" :max="100" :step="1"/>
         </a-form-item>
         <footer-tool-bar>
             <a-space>

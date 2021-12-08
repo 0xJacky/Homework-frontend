@@ -9,7 +9,6 @@
                             <a-avatar icon="user" size="large"/>
                             <div class="info">
                                 <p>{{ c.user?.name }}</p>
-                                <p>协作: </p>
                             </div>
                         </div>
                     </a-card>
@@ -138,7 +137,7 @@ export default {
 <style lang="less" scoped>
 .class-list {
     .ant-card {
-        height: 223px;
+        height: 191px;
     }
 
     .class_content {
@@ -155,7 +154,7 @@ export default {
     }
 
     .join {
-        padding-top: 45px;
+        padding-top: 30px;
     }
 }
 

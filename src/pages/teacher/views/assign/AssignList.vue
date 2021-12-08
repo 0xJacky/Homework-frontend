@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import columns from '@/pages/teacher/views/assign/assign_columns'
+import moment from 'moment'
 import FooterToolBar from '@/components/FooterToolbar/FooterToolBar'
 import StdTable from '@/components/StdDataDisplay/StdTable'
 import RichText from '@/components/RichText/RichText'
@@ -38,7 +38,50 @@ export default {
     components: {RichText, StdTable, FooterToolBar},
     data() {
         return {
-            columns,
+            columns: [{
+                title: 'ID',
+                dataIndex: 'id',
+                sorter: true
+            }, {
+                title: '学号',
+                dataIndex: 'user.school_id',
+                search: {
+                    type: 'input'
+                },
+                sorter: true
+            }, {
+                title: '姓名',
+                dataIndex: 'user.name',
+                search: {
+                    type: 'input'
+                }
+            }, {
+                title: '提交时间',
+                dataIndex: 'created_at',
+                sorter: true,
+                customRender: (text, record) => {
+                    let html = []
+                    html.push(<span>
+                        {moment(text).format('yyyy-MM-DD HH:mm:ss') } </span>)
+                    if (moment(text).isAfter(record.deadline)) {
+                        html.push(<a-tag color="pink">
+                            超时提交
+                        </a-tag>)
+                    } else {
+                        html.push(<a-tag color="blue">
+                            按时提交
+                        </a-tag>)
+                    }
+                    return <div>{html}</div>
+                },
+            }, {
+                title: '成绩',
+                dataIndex: 'score',
+                sorter: true
+            }, {
+                title: '操作',
+                dataIndex: 'action'
+            }],
             data: {},
             server: process.env['VUE_APP_API_UPLOAD_ROOT'],
             api: this.$api.teacher_api.assign,

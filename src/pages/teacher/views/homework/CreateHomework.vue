@@ -2,13 +2,11 @@
     <a-card :title="data.id?'修改作业':'创建作业'">
         <std-data-entry :data-list="columns" :data-source="data"/>
         <footer-tool-bar>
-            <template  v-if="data.id">
-                <a-space>
-                    <a-button @click="$router.go(-1)">返回</a-button>
-                    <a-button type="primary" @click="save">保存</a-button>
-                </a-space>
-            </template>
-            <a-button type="primary" @click="save" v-else>创建</a-button>
+            <a-space>
+                <a-button @click="$router.go(-1)">返回</a-button>
+                <a-button type="primary" @click="save" v-if="data.id">保存</a-button>
+                <a-button type="primary" @click="save" v-else>创建</a-button>
+            </a-space>
         </footer-tool-bar>
     </a-card>
 </template>

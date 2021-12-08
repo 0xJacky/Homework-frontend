@@ -2,7 +2,7 @@
     <a-card title="班级列表" class="class-list">
         <a-row :gutter="[16,16]">
             <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="6" :xxl="4" :key="c.id" v-for="c in classes">
-                <a @click="$router.push('class/'+1)">
+                <a @click="$router.push('class/'+c.id)">
                     <a-card :title="c.name">
                         <div class="class_content">
                             <a-avatar icon="user" size="large"/>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="join">
                     <a-button v-if="search?.join" disabled>已加入</a-button>
-                    <a-button type="primary" v-else>加入</a-button>
+                    <a-button type="primary" @click="ok" v-else>加入</a-button>
                 </div>
                 <div class="clear"></div>
             </div>
@@ -67,11 +67,14 @@ export default {
         }
     },
     created() {
-        this.$api.student_api._class.get_list().then(r => {
-            this.classes = r.data
-        })
+        this.get_list()
     },
     methods: {
+        get_list() {
+            this.$api.student_api._class.get_list().then(r => {
+                this.classes = r.data
+            })
+        },
         joinClass() {
             this.visible = true
             this.search = {}
@@ -85,7 +88,11 @@ export default {
             })
         },
         ok() {
-
+            this.$api.student_api._class.join(this.search.data.id).then(() => {
+                this.visible = false
+                this.$message.success('加入成功')
+                this.get_list()
+            })
         }
     }
 }
