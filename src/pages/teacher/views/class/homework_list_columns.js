@@ -11,7 +11,7 @@ const columns = [{
     search: true
 }, {
     title: '截止时间',
-    dataIndex: 'ddl',
+    dataIndex: 'deadline',
     datetime: true,
     edit: {
         type: 'date_picker'

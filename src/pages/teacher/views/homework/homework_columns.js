@@ -23,12 +23,22 @@ const columns = [{
     search: true
 }, {
     title: '截止时间',
-    dataIndex: 'ddl',
+    dataIndex: 'deadline',
     datetime: true,
     edit: {
-        type: 'date_picker'
+        type: 'date_picker',
+        showTime: {
+            format: 'HH:mm'
+        }
     },
     sorter: true
+}, {
+    title: '描述',
+    dataIndex: 'description',
+    edit: {
+        type: 'rich-text'
+    },
+    search: true
 }, {
     title: '操作',
     dataIndex: 'action'

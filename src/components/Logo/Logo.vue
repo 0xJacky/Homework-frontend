@@ -1,7 +1,7 @@
 <template>
     <div class="logo">
         <img :src="logo"/>
-        <div class="text">企业实习</div>
+        <div class="text">作业系统</div>
         <div class="clear"></div>
     </div>
 </template>
@@ -36,6 +36,7 @@ export default {
 
     img {
         height: 46px;
+        padding: 12px;
         float: left;
     }
 

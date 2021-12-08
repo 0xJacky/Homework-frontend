@@ -4,13 +4,13 @@ const assign_columns = [{
     sorter: true
 }, {
     title: '学号',
-    dataIndex: 'school_id',
+    dataIndex: 'user.school_id',
     search: {
         type: 'input'
     }
 }, {
     title: '姓名',
-    dataIndex: 'name',
+    dataIndex: 'user.name',
     search: {
         type: 'input'
     }

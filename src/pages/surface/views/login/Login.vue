@@ -80,7 +80,6 @@
 <script>
 import Vue from 'vue'
 import VueParticles from 'vue-particles'
-import './gt'
 import {UserType} from '@/constant'
 
 Vue.use(VueParticles)
@@ -145,22 +144,6 @@ export default {
             this.jump()
         } else {
             this.form = this.$form.createForm(this)
-            const that = this
-            this.$api.authorization.geetest_first_register().then(r => {
-                window.initGeetest({
-                    ...r,
-                    product: 'bind',
-                }, (captchaObj) => {
-                    captchaObj.onReady(function () {
-                        // 验证码ready之后才能调用verify方法显示验证码
-                    }).onSuccess(function () {
-                        that.login()
-                    }).onError(function () {
-
-                    })
-                    this.captchaObj = captchaObj
-                })
-            })
         }
     },
     methods: {
@@ -175,11 +158,7 @@ export default {
             }
         },
         async login() {
-            let captcha = {}
-            if (!this.debug) {
-                captcha = await this.captchaObj.getValidate()
-            }
-            this.$api.authorization.login(this.data.school_id, this.data.password, captcha)
+            this.$api.authorization.login(this.data.school_id, this.data.password)
                 .then(async () => {
                     await this.$api.user.info()
                     // 防止手速过快重复登录
@@ -191,12 +170,7 @@ export default {
                 .catch(r => {
                     this.$message.error(r.message)
                     this.errors = {...r.errors}
-                    this.captchaObj.reset()
                     this.loading = false
-                    if (r.code === 4032) {
-                        this.debug = false
-                        this.captchaObj.verify()
-                    }
                 })
         },
         handleSubmit: async function (e) {
@@ -206,15 +180,7 @@ export default {
                 // 防止手速过快重复登录
                 if (!err && !this.ok) {
                     this.data = data
-                    if (this.debug) {
-                        await this.login()
-                        return
-                    }
-                    if (!this.captchaObj.getValidate()) {
-                        this.captchaObj.verify()
-                        this.loading = false
-                        return
-                    }
+                    await this.login()
                 }
                 this.loading = false
             })

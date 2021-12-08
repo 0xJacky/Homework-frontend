@@ -10,7 +10,7 @@
             <a-divider type="vertical"/>
         </span>
         <h3>作业描述</h3>
-        <p v-html="data?.homework?.description"></p>
+        <rich-text :html="data?.homework?.description"/>
         <h3>文件上传</h3>
         <div class="upload-container">
             <a-upload-dragger
@@ -39,10 +39,11 @@
 
 <script>
 import FooterToolBar from '@/components/FooterToolbar/FooterToolBar'
+import RichText from '@/components/RichText/RichText'
 
 export default {
     name: 'HomeworkDetail',
-    components: {FooterToolBar},
+    components: {RichText, FooterToolBar},
     data() {
         return {
             data: {},

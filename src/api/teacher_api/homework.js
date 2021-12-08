@@ -1,16 +1,14 @@
-// import Curd from '@/api/curd'
-// const homework = new Curd('/student/homework')
+import http from '@/lib/http'
 
 const homework = {
-    get_list() {
-        return Promise.resolve({
-            data: [{
-                id: 1,
-                name: '数据库作业一',
-                ddl: '2021-12-08T00:00:00.000+08:00',
-                score: '100'
-            }]
-        })
+    get_list(params) {
+        return http.get('/teacher/class/' + params.id + '/homeworks', {params})
+    },
+    get(id) {
+        return http.get('/teacher/homework/' + id)
+    },
+    save(id = null, data) {
+        return http.post('/teacher/homework' + (id ? '/' + id : ''), data)
     }
 }
 export default homework

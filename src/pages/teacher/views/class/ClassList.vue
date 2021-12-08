@@ -1,23 +1,23 @@
 <template>
     <a-card title="班级列表" class="class-list">
+        <a slot="extra" @click="joinClass">加入班级</a>
         <a-row :gutter="[16,16]">
-            <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="6" :xxl="4">
-                <a @click="$router.push('class/'+1)">
-                    <a-card title="数据库周四下午5-8节">
+            <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="6" :xxl="4" :key="c.id" v-for="c in classes">
+                <a @click="$router.push('class/'+c.id)">
+                    <a-card :title="c.name">
                         <div class="class_content">
                             <a-avatar icon="user" size="large"/>
                             <div class="info">
-                                <p>李菊老师</p>
-                                <p>协作老师：李菊、龙梓老师</p>
+                                <p>{{ c.user?.name }}</p>
+                                <p>协作: </p>
                             </div>
                         </div>
                     </a-card>
                 </a>
-
             </a-col>
 
             <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="6" :xxl="4">
-                <a @click="visible=true">
+                <a @click="createClass">
                     <a-card class="join">
                         <div class="class_content">
                             <a-avatar icon="plus" size="large"/>
@@ -29,15 +29,43 @@
                 </a>
             </a-col>
         </a-row>
+
+        <a-modal
+            :mask="false"
+            title="加入班级"
+            :visible="visible"
+            @cancel="visible=false"
+            :footer="null"
+            destroyOnClose
+        >
+            <a-form-item label="请输入班级ID">
+                <a-input-search enter-button @search="onSearch"/>
+            </a-form-item>
+            <div class="search-class" v-if="search.code === 200">
+                <div class="info">
+                    <p>ID: {{ search?.data.id }}</p>
+                    <p>班级名称: {{ search?.data?.name }}</p>
+                    <p>创建人: {{ search?.data?.user?.name }}老师</p>
+                </div>
+                <div class="join">
+                    <a-button v-if="search?.join" disabled>已加入</a-button>
+                    <a-button type="primary" @click="onJoin" v-else>加入</a-button>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <a-empty v-else/>
+        </a-modal>
+
         <a-modal
             :mask="false"
             title="创建班级"
-            :visible="visible"
-            @cancel="visible=false"
-            ok-text="创建"
+            :visible="visible_create"
+            @cancel="visible_create=false"
+            @ok="ok"
+            destroyOnClose
         >
             <a-form-item label="请输入班级名称">
-                <a-input />
+                <a-input v-model="className"/>
             </a-form-item>
         </a-modal>
     </a-card>
@@ -48,12 +76,60 @@ export default {
     name: 'ClassList',
     data() {
         return {
-            visible: false
+            visible: false,
+            visible_create: false,
+            classes: [],
+            search: {},
+            className: ''
         }
     },
+    watch: {
+        '$route'() {
+            this.get_list()
+        }
+    },
+    created() {
+        this.get_list()
+    },
     methods: {
+        get_list() {
+            this.$api.teacher_api._class.get_list().then(r => {
+                this.classes = r.data
+            })
+        },
+        joinClass() {
+            this.visible = true
+            this.search = {}
+        },
+        onSearch(id) {
+            this.search = {}
+            this.$nextTick(() => {
+                this.$api.teacher_api._class.get(id).then(r => {
+                    this.search = r
+                })
+            })
+        },
+        onJoin() {
+            this.$api.teacher_api._class.join(this.search.data.id).then(() => {
+                this.visible = false
+                this.$message.success('加入成功')
+                this.get_list()
+            })
+        },
+        createClass() {
+            this.className = ''
+            this.visible_create = true
+        },
         ok() {
-
+            this.$api.teacher_api._class.save(null, {
+                name: this.className
+            }).then(() => {
+                this.get_list()
+                this.visible_create = false
+                this.$message.success('创建成功')
+            }).catch(e => {
+                this.$message.error('创建失败' + e?.mseg)
+            })
         }
     }
 }

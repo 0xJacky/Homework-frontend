@@ -11,7 +11,7 @@
 
         <footer-tool-bar>
             <a-space>
-                <a-button @click="$router.go(-1)">返回</a-button>
+                <a-button @click="$router.push('/class_list')">返回</a-button>
             </a-space>
         </footer-tool-bar>
     </a-card>

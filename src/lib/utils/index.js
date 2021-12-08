@@ -56,7 +56,7 @@ export default {
             if (process.env['VUE_APP_API_WSS_ROOT']) {
                 return process.env['VUE_APP_API_WSS_ROOT']
             }
-            return protocol + document.domain + '/ws'
+            return protocol + document.domain + '/api'
         }
         Vue.prototype.formatDate = (text) => {
             return moment(text).format('yyyy-MM-DD')

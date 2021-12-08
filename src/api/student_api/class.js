@@ -6,6 +6,12 @@ const _class = {
     },
     get(id) {
         return http.get('/student/class/'+id)
+    },
+    join(id) {
+        return http.get('/student/class/'+id +'/join')
+    },
+    exit(id) {
+        return http.get('/student/class/'+id +'/exit')
     }
 }
 
