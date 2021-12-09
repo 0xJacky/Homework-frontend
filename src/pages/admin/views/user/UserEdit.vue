@@ -77,10 +77,7 @@ const editable = [{
     mask: {
         0: '无',
         1: '学生',
-        2: '教师',
-        3: '企业指导老师',
-        4: '企业',
-        5: '学院'
+        2: '教师'
     },
     edit: {
         type: 'select',
@@ -128,24 +125,6 @@ const editable = [{
             edit: '留空则不修改'
         }
     }
-}, {
-    title: '年级',
-    dataIndex: 'grade',
-    edit: {
-        type: 'input'
-    }
-}, {
-    title: '班级',
-    dataIndex: 'class',
-    edit: {
-        type: 'input'
-    }
-}, {
-    title: '描述',
-    dataIndex: 'description',
-    edit: {
-        type: 'textarea'
-    }
 }]
 
 export default {
@@ -164,13 +143,6 @@ export default {
                 email: '无',
                 phone: '无',
                 password: '',
-                description: '无描述',
-                last_active: '',
-                college: {},
-                major: {},
-                company: {},
-                teacher: {},
-                company_teacher: {}
             },
             editable,
             visible: false,

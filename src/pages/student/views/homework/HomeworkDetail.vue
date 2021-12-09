@@ -6,11 +6,6 @@
         <a-tabs :default-active-key="tab" @change="changeTab">
             <a-tab-pane key="1" tab="作业描述">
                 <rich-text :html="data?.homework?.description"/>
-                <footer-tool-bar>
-                    <a-space>
-                        <a-button @click="$router.go(-1)">返回</a-button>
-                    </a-space>
-                </footer-tool-bar>
             </a-tab-pane>
             <a-tab-pane key="2" tab="文件上传">
                 <p style="margin: 5px 0" v-for="file in uploaded" :key="file.id">
@@ -46,36 +41,33 @@
                             支持单个或批量上传。
                         </p>
                     </a-upload-dragger>
-                    <footer-tool-bar>
-                        <a-space>
-                            <a-button @click="$router.go(-1)">返回</a-button>
-                        </a-space>
-                    </footer-tool-bar>
                 </div>
             </a-tab-pane>
-            <a-tab-pane key="3" tab="题目" v-show="data?.homework?.template">
-                <p>总分: {{ total }}</p>
-                <p>客观题总分: {{ obj_total }}</p>
-                <p>客观题得分: {{ data?.assign?.objective_score }}</p>
-                <question-paper
-                    :homework_id="data?.homework?.id"
-                    :template="data?.homework?.template??[]"
-                    :answer="data?.assign?.answer"
-                    @save="onQuestionSave"
-                />
+            <a-tab-pane key="3" tab="题目">
+                <a-empty v-if="!data?.homework?.template?.length"/>
+                <template v-else>
+                    <p>总分: {{ total }}</p>
+                    <p>客观题总分: {{ obj_total }}</p>
+                    <p>客观题得分: {{ data?.assign?.objective_score }}</p>
+                    <question-paper
+                        :homework_id="data?.homework?.id"
+                        :template="data?.homework?.template??[]"
+                        :answer="answer"
+                        @save="onQuestionSave"
+                    />
+                </template>
             </a-tab-pane>
         </a-tabs>
     </a-card>
 </template>
 
 <script>
-import FooterToolBar from '@/components/FooterToolbar/FooterToolBar'
 import RichText from '@/components/RichText/RichText'
 import QuestionPaper from '@/pages/student/views/homework/QuestionPaper'
 
 export default {
     name: 'HomeworkDetail',
-    components: {QuestionPaper, RichText, FooterToolBar},
+    components: {QuestionPaper, RichText},
     data() {
         return {
             data: {},
@@ -83,7 +75,8 @@ export default {
             uploadList: [],
             uploaded: this.fileList,
             assign_id: 0,
-            tab: this.$route.query.tab ?? '1'
+            tab: this.$route.query.tab ?? '1',
+            answer: {}
         }
     },
     created() {
@@ -91,6 +84,7 @@ export default {
             this.data = r
             this.uploaded = r.assign.uploads
             this.assign_id = r.assign.id
+            this.answer = r.assign.answer ?? {}
         })
     },
     methods: {
@@ -139,7 +133,7 @@ export default {
         total: {
             get() {
                 let total = 0
-                this.data?.homework?.template.forEach(v => {
+                this.data?.homework?.template?.forEach(v => {
                     total += parseInt(v.score??0)
                 })
                 return total
@@ -148,7 +142,7 @@ export default {
         obj_total: {
             get() {
                 let total = 0
-                this.data?.homework?.template.forEach(v => {
+                this.data?.homework?.template?.forEach(v => {
                     if (v.type !== 4)
                         total += parseInt(v.score??0)
                 })

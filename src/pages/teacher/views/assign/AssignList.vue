@@ -11,7 +11,7 @@
                     :get_params="params"
                     :deletable="false"
                     edit_text="查看"
-                    @clickEdit="id => $router.push('/assign/'+id)"
+                    @clickEdit="viewAssign"
                 />
             </a-tab-pane>
             <a-tab-pane key="2" tab="作业描述">
@@ -57,14 +57,18 @@ export default {
                 }
             }, {
                 title: '提交时间',
-                dataIndex: 'created_at',
-                sorter: true,
+                dataIndex: 'assign_at',
                 customRender: (text, record) => {
                     let html = []
-                    html.push(<span>
-                        {moment(text).format('yyyy-MM-DD HH:mm:ss') } </span>)
-                    if (moment(text).isAfter(record.deadline)) {
+                    if (!text) {
                         html.push(<a-tag color="pink">
+                            未提交
+                        </a-tag>)
+                        return <div>{html}</div>
+                    }
+                    html.push(<span> {moment(text).format('yyyy-MM-DD HH:mm:ss')} </span>)
+                    if (moment(text).isAfter(record.deadline)) {
+                        html.push(<a-tag color="orange">
                             超时提交
                         </a-tag>)
                     } else {
@@ -111,6 +115,10 @@ export default {
         },
         edit() {
             this.$router.push('/homework/' + this.$route.params.id + '/edit')
+        },
+        viewAssign(id, record) {
+            if (record.assign_at) this.$router.push('/assign/' + id)
+            else this.$message.info('学生未提交作业')
         }
     }
 }
