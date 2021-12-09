@@ -3,9 +3,14 @@
         <h3>提交情况</h3>
         <p>截止时间：{{ formatDateTime(data?.homework?.deadline) }}</p>
         <p>成绩：{{ data.score }}</p>
-        <a-tabs default-active-key="1">
+        <a-tabs :default-active-key="tab" @change="changeTab">
             <a-tab-pane key="1" tab="作业描述">
                 <rich-text :html="data?.homework?.description"/>
+                <footer-tool-bar>
+                    <a-space>
+                        <a-button @click="$router.go(-1)">返回</a-button>
+                    </a-space>
+                </footer-tool-bar>
             </a-tab-pane>
             <a-tab-pane key="2" tab="文件上传">
                 <p style="margin: 5px 0" v-for="file in uploaded" :key="file.id">
@@ -41,25 +46,36 @@
                             支持单个或批量上传。
                         </p>
                     </a-upload-dragger>
+                    <footer-tool-bar>
+                        <a-space>
+                            <a-button @click="$router.go(-1)">返回</a-button>
+                        </a-space>
+                    </footer-tool-bar>
                 </div>
             </a-tab-pane>
+            <a-tab-pane key="3" tab="题目" v-show="data?.homework?.template">
+                <p>总分: {{ total }}</p>
+                <p>客观题总分: {{ obj_total }}</p>
+                <p>客观题得分: {{ data?.assign?.objective_score }}</p>
+                <question-paper
+                    :homework_id="data?.homework?.id"
+                    :template="data?.homework?.template??[]"
+                    :answer="data?.assign?.answer"
+                    @save="onQuestionSave"
+                />
+            </a-tab-pane>
         </a-tabs>
-
-        <footer-tool-bar>
-            <a-space>
-                <a-button @click="$router.go(-1)">返回</a-button>
-            </a-space>
-        </footer-tool-bar>
     </a-card>
 </template>
 
 <script>
 import FooterToolBar from '@/components/FooterToolbar/FooterToolBar'
 import RichText from '@/components/RichText/RichText'
+import QuestionPaper from '@/pages/student/views/homework/QuestionPaper'
 
 export default {
     name: 'HomeworkDetail',
-    components: {RichText, FooterToolBar},
+    components: {QuestionPaper, RichText, FooterToolBar},
     data() {
         return {
             data: {},
@@ -67,6 +83,7 @@ export default {
             uploadList: [],
             uploaded: this.fileList,
             assign_id: 0,
+            tab: this.$route.query.tab ?? '1'
         }
     },
     created() {
@@ -107,6 +124,37 @@ export default {
                 return value !== r
             })
         },
+        changeTab(key) {
+            this.$router.push({
+                query: {
+                    tab: key
+                }
+            })
+        },
+        onQuestionSave(r) {
+            this.data.assign = r
+        }
+    },
+    computed: {
+        total: {
+            get() {
+                let total = 0
+                this.data?.homework?.template.forEach(v => {
+                    total += parseInt(v.score??0)
+                })
+                return total
+            }
+        },
+        obj_total: {
+            get() {
+                let total = 0
+                this.data?.homework?.template.forEach(v => {
+                    if (v.type !== 4)
+                        total += parseInt(v.score??0)
+                })
+                return total
+            }
+        }
     }
 }
 </script>
@@ -116,23 +164,4 @@ export default {
     padding-top: 15px;
 }
 
-h3 {
-    position: relative;
-    padding: 5px 18px;
-    margin: 10px 0;
-}
-
-h3:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 6px;
-    width: 6px;
-    height: 23px;
-    border-radius: 10px;
-    background: #f0494d;
-    background: -o-linear-gradient(bottom, #ff843a, #f0494d);
-    background: -webkit-gradient(linear, left bottom, left top, from(#ff843a), to(#f0494d));
-    background: linear-gradient(to top, #ff843a, #f0494d);
-}
 </style>

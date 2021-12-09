@@ -44,9 +44,15 @@ export default {
                 sorter: true
             }, {
                 title: '提交时间',
-                dataIndex: 'created_at',
+                dataIndex: 'assign_at',
                 customRender: (text, record) => {
                     let html = []
+                    if (!text) {
+                        html.push(<a-tag color="pink">
+                            未提交
+                        </a-tag>)
+                        return <div>{html}</div>
+                    }
                     html.push(<span> {moment(text).format('yyyy-MM-DD HH:mm:ss') } </span>)
                     if (moment(text).isAfter(record.deadline)) {
                         html.push(<a-tag color="pink">

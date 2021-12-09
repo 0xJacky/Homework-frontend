@@ -11,7 +11,7 @@
 export default {
     name: 'StdRadioGroup',
     props: {
-        options: Object,
+        options: [Object,Array],
         value: {
             type: [String, Number]
         },

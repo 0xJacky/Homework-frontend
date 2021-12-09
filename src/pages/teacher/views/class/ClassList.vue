@@ -126,8 +126,8 @@ export default {
                 this.get_list()
                 this.visible_create = false
                 this.$message.success('创建成功')
-            }).catch(e => {
-                this.$message.error('创建失败' + e?.mseg)
+            }).catch(() => {
+                this.$message.error('创建失败')
             })
         }
     }

@@ -5,7 +5,6 @@ const user_columns = [
         sorter: true,
         pithy: true,
         width: 70,
-        fixed: 'left'
     }, {
         title: '用户名',
         dataIndex: 'name',
@@ -15,7 +14,6 @@ const user_columns = [
             type: 'input'
         },
         width: 80,
-        fixed: 'left'
     }, {
         title: 'School ID / 登录名',
         dataIndex: 'school_id',
@@ -32,10 +30,7 @@ const user_columns = [
         pithy: true,
         mask: {
             1: '学生',
-            2: '教师',
-            3: '企业指导老师',
-            4: '企业',
-            5: '学院'
+            2: '教师'
         },
         edit: {
             type: 'select'
@@ -66,44 +61,6 @@ const user_columns = [
             type: 'select',
         },
         search: true,
-        width: 120,
-    }, {
-        title: '学院',
-        dataIndex: 'college.name',
-        width: 200,
-    }, {
-        title: '专业',
-        dataIndex: 'major.name',
-        width: 200,
-    }, {
-        title: '公司',
-        dataIndex: 'company.name',
-        width: 120,
-    }, {
-        title: '校内指导老师',
-        dataIndex: 'teacher.name',
-        width: 120,
-    }, {
-        title: '企业指导老师',
-        dataIndex: 'company_teacher.name',
-        width: 120,
-    }, {
-        title: '年级',
-        dataIndex: 'grade',
-        edit: {
-            type: 'input'
-        },
-        search: true,
-        batch: true,
-        width: 120,
-    }, {
-        title: '班级',
-        dataIndex: 'class',
-        edit: {
-            type: 'input'
-        },
-        search: true,
-        batch: true,
         width: 120,
     }, {
         title: '邮箱',

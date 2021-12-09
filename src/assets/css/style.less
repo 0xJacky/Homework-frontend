@@ -179,3 +179,22 @@ button {
         display: block;
     }
 }*/
+h3 {
+    position: relative;
+    padding: 5px 18px;
+    margin: 10px 0;
+}
+
+h3:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 6px;
+    height: 23px;
+    border-radius: 10px;
+    background: #f0494d;
+    background: -o-linear-gradient(bottom, #ff843a, #f0494d);
+    background: -webkit-gradient(linear, left bottom, left top, from(#ff843a), to(#f0494d));
+    background: linear-gradient(to top, #ff843a, #f0494d);
+}
