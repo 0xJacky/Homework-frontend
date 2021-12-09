@@ -2,7 +2,7 @@
     <a-card title="作业详情">
         <h3>提交情况</h3>
         <p>截止时间：{{ formatDateTime(data?.homework?.deadline) }}</p>
-        <p>成绩：{{ data.score }}</p>
+        <p>成绩：{{ data.score || '未批改' }}</p>
         <a-tabs :default-active-key="tab" @change="changeTab">
             <a-tab-pane key="1" tab="作业描述">
                 <rich-text :html="data?.homework?.description"/>

@@ -32,6 +32,9 @@ export default {
             this.M_answer = this.answer
         }
     },
+    created() {
+        this.M_answer = this.answer
+    },
     methods: {
         save() {
             this.$api.student_api.assign.save(this.homework_id, {

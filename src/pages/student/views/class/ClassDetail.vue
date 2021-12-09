@@ -55,7 +55,7 @@ export default {
                     }
                     html.push(<span> {moment(text).format('yyyy-MM-DD HH:mm:ss') } </span>)
                     if (moment(text).isAfter(record.deadline)) {
-                        html.push(<a-tag color="pink">
+                        html.push(<a-tag color="orange">
                             超时提交
                         </a-tag>)
                     } else {
@@ -68,7 +68,17 @@ export default {
             }, {
                 title: '成绩',
                 dataIndex: 'score',
-                sorter: true
+                sorter: true,
+                customRender: (text) => {
+                    let html = []
+                    if (!text) {
+                        html.push(<a-tag color="orange">
+                            未批改
+                        </a-tag>)
+                        return <div>{html}</div>
+                    }
+                    return <div>{html}</div>
+                },
             }, {
                 title: '操作',
                 dataIndex: 'action'
