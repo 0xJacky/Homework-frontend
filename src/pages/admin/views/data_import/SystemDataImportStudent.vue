@@ -2,8 +2,6 @@
     <a-card title="导入学生">
         <p>请先下载模板，填入数据，点击选择文件按钮选择要上传的 Excel，
             再点击解析文件，系统将会验证您的表单是否合法，验证通过后可点击导入。</p>
-        <p>注意，为了数据安全，您必须在导入前先新建好学院、专业。
-            班级不必手动新建，系统会自动创建班级。</p>
         <p>用户初始密码与登录名相同</p>
         <a-upload :before-upload="beforeUpload" :file-list="fileList">
             <a-button>
@@ -106,29 +104,6 @@ export default {
                     title: 'School ID',
                     dataIndex: 'school_id',
                     key: 'school_id',
-                },
-                {
-                    title: '学院',
-                    dataIndex: 'college',
-                    key: 'college',
-                    scopedSlots: {customRender: 'college'},
-                },
-                {
-                    title: '专业',
-                    key: 'major',
-                    dataIndex: 'major',
-                    scopedSlots: {customRender: 'major'},
-                },
-                {
-                    title: '班级',
-                    key: 'class',
-                    dataIndex: 'class',
-                    scopedSlots: {customRender: 'class'},
-                },
-                {
-                    title: '年级',
-                    key: 'year',
-                    dataIndex: 'year',
                 },
                 {
                     title: '状态',

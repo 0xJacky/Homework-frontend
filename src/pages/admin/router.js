@@ -47,6 +47,24 @@ export const routes = [
                 ]
             },
             {
+                path: 'data_import',
+                name: '数据导入',
+                meta: {icon: 'cloud-upload'},
+                component: BaseRouterView,
+                children: [
+                    {
+                        path: 'student',
+                        component: () => import('@/pages/admin/views/data_import/SystemDataImportStudent'),
+                        name: '导入学生'
+                    },
+                    {
+                        path: 'teacher',
+                        component: () => import('@/pages/admin/views/data_import/SystemDataImportTeacher'),
+                        name: '导入教师'
+                    },
+                ]
+            },
+            {
                 path: 'about',
                 name: '关于',
                 meta: {icon: 'info-circle'},

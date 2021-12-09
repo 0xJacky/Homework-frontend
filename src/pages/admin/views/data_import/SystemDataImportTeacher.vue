@@ -2,7 +2,6 @@
     <a-card title="导入教师">
         <p>请先下载模板，填入数据，点击选择文件按钮选择要上传的 Excel，
             再点击解析文件，系统将会验证您的表单是否合法，验证通过后可点击导入。</p>
-        <p>注意，为了数据安全，您必须在导入前先新建好学院。</p>
         <p>用户初始密码与登录名相同</p>
         <a-upload :before-upload="beforeUpload" :file-list="fileList">
             <a-button>
@@ -88,12 +87,6 @@ export default {
                     key: 'school_id',
                 },
                 {
-                    title: '学院',
-                    dataIndex: 'college',
-                    key: 'college',
-                    scopedSlots: {customRender: 'college'},
-                },
-                {
                     title: '状态',
                     key: 'status',
                     dataIndex: 'user_id',
@@ -149,7 +142,7 @@ export default {
         },
         downloadTemplate() {
             const a = document.createElement('a')
-            a.href = process.env['VUE_APP_API_STATIC_ROOT']+'/admin/data_import/student_template?token='
+            a.href = process.env['VUE_APP_API_STATIC_ROOT']+'/admin/data_import/teacher_template?token='
                 +btoa(this.$store.state.user.token)
             a.click()
         }

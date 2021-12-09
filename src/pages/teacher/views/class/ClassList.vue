@@ -1,33 +1,35 @@
 <template>
     <a-card title="班级列表" class="class-list">
         <a slot="extra" @click="joinClass">加入班级</a>
-        <a-row :gutter="[16,16]">
-            <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="6" :xxl="4" :key="c.id" v-for="c in classes">
-                <a @click="$router.push('class/'+c.id)">
-                    <a-card :title="c.name">
-                        <div class="class_content">
-                            <a-avatar icon="user" size="large"/>
-                            <div class="info">
-                                <p>{{ c.user?.name }}</p>
+        <a-spin :spinning="spinning">
+            <a-row :gutter="[16,16]">
+                <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="6" :xxl="4" :key="c.id" v-for="c in classes">
+                    <a @click="$router.push('class/'+c.id)">
+                        <a-card :title="c.name">
+                            <div class="class_content">
+                                <a-avatar icon="user" size="large"/>
+                                <div class="info">
+                                    <p>{{ c.user?.name }}</p>
+                                </div>
                             </div>
-                        </div>
-                    </a-card>
-                </a>
-            </a-col>
+                        </a-card>
+                    </a>
+                </a-col>
 
-            <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="6" :xxl="4">
-                <a @click="createClass">
-                    <a-card class="join">
-                        <div class="class_content">
-                            <a-avatar icon="plus" size="large"/>
-                            <div class="info">
-                                <p>创建班级</p>
+                <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="6" :xxl="4">
+                    <a @click="createClass">
+                        <a-card class="join">
+                            <div class="class_content">
+                                <a-avatar icon="plus" size="large"/>
+                                <div class="info">
+                                    <p>创建班级</p>
+                                </div>
                             </div>
-                        </div>
-                    </a-card>
-                </a>
-            </a-col>
-        </a-row>
+                        </a-card>
+                    </a>
+                </a-col>
+            </a-row>
+        </a-spin>
 
         <a-modal
             :mask="false"
@@ -79,7 +81,8 @@ export default {
             visible_create: false,
             classes: [],
             search: {},
-            className: ''
+            className: '',
+            spinning: false
         }
     },
     watch: {
@@ -92,8 +95,10 @@ export default {
     },
     methods: {
         get_list() {
+            this.spinning = true
             this.$api.teacher_api._class.get_list().then(r => {
                 this.classes = r.data
+                this.spinning = false
             })
         },
         joinClass() {

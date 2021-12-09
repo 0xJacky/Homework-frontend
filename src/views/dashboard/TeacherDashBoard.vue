@@ -60,10 +60,7 @@ export default {
         }
     },
     created() {
-        this.$api.dashboard.teacher().then(r => {
-            this.data = r
-            // console.log('teacher',this.data)
-        })
+
     }
 }
 </script>
