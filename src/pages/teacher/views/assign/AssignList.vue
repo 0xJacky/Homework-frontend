@@ -39,10 +39,6 @@ export default {
     data() {
         return {
             columns: [{
-                title: 'ID',
-                dataIndex: 'id',
-                sorter: true
-            }, {
                 title: '学号',
                 dataIndex: 'user.school_id',
                 search: {
@@ -81,7 +77,17 @@ export default {
             }, {
                 title: '成绩',
                 dataIndex: 'score',
-                sorter: true
+                sorter: true,
+                customRender: (text) => {
+                    let html = []
+                    if (!text) {
+                        html.push(<a-tag color="orange">
+                            未批改
+                        </a-tag>)
+                        return <div>{html}</div>
+                    }
+                    return <div>{text}</div>
+                }
             }, {
                 title: '操作',
                 dataIndex: 'action'
