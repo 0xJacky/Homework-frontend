@@ -77,7 +77,7 @@ export default {
                         </a-tag>)
                         return <div>{html}</div>
                     }
-                    return <div>{html}</div>
+                    return <div>{text}</div>
                 },
             }, {
                 title: '操作',

@@ -66,6 +66,10 @@ export default {
                     this.answer = r.data.answer ?? {}
                 })
             } else {
+                if (this.data.class_id ||
+                    this.data.description || this.data.name || this.data.deadline) {
+                    return
+                }
                 this.data = {
                     class_id: parseInt(this.$route.query.class_id ?? null),
                     class: {
