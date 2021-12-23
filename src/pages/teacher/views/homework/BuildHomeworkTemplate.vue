@@ -24,7 +24,15 @@ import {
     Subjective
 } from './template'
 
+import {v4 as uuidv4} from 'uuid'
+
 import StdDataEntryBuilder from '@/pages/teacher/views/homework/StdDataEntryBuilder'
+
+const deepCopy = o => {
+    const t = JSON.parse(JSON.stringify(o))
+    t.dataIndex = uuidv4()
+    return t
+}
 
 export default {
     name: 'BuildHomeworkTemplate',
@@ -57,19 +65,19 @@ export default {
     },
     methods: {
         addSingleChoice() {
-            this.template.push({...SingleChoice})
+            this.template.push(deepCopy(SingleChoice))
         },
         addMultiChoice() {
-            this.template.push({...MultiChoice})
+            this.template.push(deepCopy(MultiChoice))
         },
         addTrueOrFalse() {
-            this.template.push({...TrueOrFalse})
+            this.template.push(deepCopy(TrueOrFalse))
         },
         addCompletion() {
-            this.template.push({...Completion})
+            this.template.push(deepCopy(Completion))
         },
         addSubjective() {
-            this.template.push({...Subjective})
+            this.template.push(deepCopy(Subjective))
         }
     }
 }

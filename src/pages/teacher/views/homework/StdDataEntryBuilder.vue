@@ -88,13 +88,12 @@ export default {
     methods: {
         ok() {
             if (this.index < 0) {
-                this.profiles.push({...this.profile})
+                this.profiles.push(JSON.parse(JSON.stringify(this.profile)))
             }
             this.visible = false
             if (this.profile.type === 1) {
                 this.profile.options = this.profile.options_temp.split(',')
             }
-            this.profile.dataIndex = this.index
             this.$nextTick(() => {
                 this.$emit('changeProfiles', this.profiles)
             })
